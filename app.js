@@ -36,7 +36,6 @@ function onPageLoad() {
         } else {
             // we have an access token so present device section
             document.getElementById("deviceSection").style.display = 'block';
-            refreshDevices();
             refreshPlaylists();
             currentlyPlaying();
         }
@@ -121,30 +120,6 @@ function handleAuthorizationResponse() {
     }
 }
 
-function refreshDevices() {
-    callApi("GET", DEVICES, null, handleDevicesResponse);
-}
-
-function handleDevicesResponse() {
-    if (this.status == 200) {
-        var data = JSON.parse(this.responseText);
-        console.log(data);
-        removeAllItems("devices");
-        data.devices.forEach(item => addDevice(item));
-    } else if (this.status == 401) {
-        refreshAccessToken()
-    } else {
-        console.log(this.responseText);
-        alert(this.responseText);
-    }
-}
-
-function addDevice(item) {
-    let node = document.createElement("option");
-    node.value = item.id;
-    node.innerHTML = item.name;
-    document.getElementById("devices").appendChild(node);
-}
 
 function callApi(method, url, body, callback) {
     let xhr = new XMLHttpRequest();

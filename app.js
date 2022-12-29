@@ -179,53 +179,12 @@ function play() {
     callApi("PUT", PLAY + "?device_id=" + deviceId(), JSON.stringify(body), handleApiResponse);
 }
 
-function shuffle() {
-    callApi("PUT", SHUFFLE + "?state=true&device_id=" + deviceId(), null, handleApiResponse);
-    play();
-}
-
-function pause() {
-    callApi("PUT", PAUSE + "?device_id=" + deviceId(), null, handleApiResponse);
-}
-
-function next() {
-    callApi("POST", NEXT + "?device_id=" + deviceId(), null, handleApiResponse);
-}
-
-function previous() {
-    callApi("POST", PREVIOUS + "?device_id=" + deviceId(), null, handleApiResponse);
-}
-
-function transfer() {
-    let body = {};
-    body.device_ids = [];
-    body.device_ids.push(deviceId())
-    callApi("PUT", PLAYER, JSON.stringify(body), handleApiResponse);
-}
-
-function handleApiResponse() {
-    if (this.status == 200) {
-        console.log(this.responseText);
-        setTimeout(currentlyPlaying, 2000);
-    } else if (this.status == 204) {
-        setTimeout(currentlyPlaying, 2000);
-    } else if (this.status == 401) {
-        refreshAccessToken()
-    } else {
-        console.log(this.responseText);
-        alert(this.responseText);
-    }
-}
-
-function deviceId() {
-    return document.getElementById("devices").value;
-}
 
 function fetchTracks() {
     let playlist_id = document.getElementById("playlists").value;
     if (playlist_id.length > 0) {
         url = TRACKS.replace("{{PlaylistId}}", playlist_id);
-        callApi("GET", url, null, handleTracksResponse);
+        console.log(callApi("GET", url, null, handleTracksResponse));
     }
 }
 

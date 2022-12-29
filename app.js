@@ -1,4 +1,4 @@
-var redirect_uri = "https://google.com/"; // change this your value
+var redirect_uri = "https://thkimsea43.github.io/"; // change this your value
 //var redirect_uri = "http://127.0.0.1:5500/index.html";
 
 
